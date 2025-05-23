@@ -6,3 +6,4 @@ transformers
 torch
 flake8
 black
+pytest

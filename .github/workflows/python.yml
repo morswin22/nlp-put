@@ -33,3 +33,6 @@ jobs:
     - name: Test types with mypy
       run: |
         mypy .
+    - name: Test with pytest
+      run: |
+        pytest

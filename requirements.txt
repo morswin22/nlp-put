@@ -2,3 +2,5 @@ kagglehub
 pandas
 mypy
 pandas-stubs
+transformers
+torch

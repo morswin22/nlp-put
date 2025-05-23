@@ -30,7 +30,7 @@ jobs:
       - name: Generate pydoc HTML documentation
         run: |
           # Generate the HTML documentation for main.py
-          pydoc -w main
+          python -m pydoc -w main
           # Create a directory for the documentation
           mkdir -p docs
           # Move the generated HTML file into the docs directory

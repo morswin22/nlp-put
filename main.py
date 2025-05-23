@@ -6,6 +6,12 @@ from transformers.pipelines import Pipeline
 
 
 def load_dataset() -> pd.DataFrame:
+    """Loads the IMDB movie reviews dataset from kaggle
+
+    Returns:
+        pd.DataFrame: contains review column and sentiment column with values "positive" and "negative"
+    """
+
     path = kagglehub.dataset_download(
         "lakshmi25npathi/imdb-dataset-of-50k-movie-reviews"
     )
@@ -14,6 +20,14 @@ def load_dataset() -> pd.DataFrame:
 
 
 def load_sentiment_analyzer(model: str) -> Pipeline:
+    """Loads sentiment analyzer using transformers pipeline
+
+    Args:
+        model (str): The name of the model to use for the sentiment analysis
+
+    Returns:
+        Pipeline: The pipeline capable of sentiment analysis
+    """
     return pipeline("sentiment-analysis", model=model)
 
 

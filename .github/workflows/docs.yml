@@ -1,0 +1,48 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on pushes to the 'main' branch
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write # Required for OIDC authentication with GitHub Pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Use the latest Python 3.x version
+
+      - name: Generate pydoc HTML documentation
+        run: |
+          # Generate the HTML documentation for main.py
+          pydoc -w main
+          # Create a directory for the documentation
+          mkdir -p docs
+          # Move the generated HTML file into the docs directory
+          mv main.html docs/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'docs' # The directory containing your documentation files
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build # This job depends on the 'build' job completing successfully
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # Deploys the artifact to GitHub Pages
